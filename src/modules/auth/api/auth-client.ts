@@ -1,11 +1,9 @@
 import { requestJson } from "@/shared/api/http";
 import { AuthResponse, UserResponse } from "../domain/types";
 
-const raw = import.meta.env.VITE_API_URL as string;
+const RAW = import.meta.env.VITE_API_URL as string;
 
-export const API_URL = raw.startsWith("http")
-  ? raw.replace(/\/$/, "")
-  : `https://${raw.replace(/\/$/, "")}`;
+export const API_URL = RAW.replace(/\/+$/, "");
 
 export function registerUser(input: {
   name: string;
