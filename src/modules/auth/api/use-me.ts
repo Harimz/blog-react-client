@@ -1,14 +1,17 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import type { UserResponse } from "../../../shared/auth/types";
-import { useApiFetch } from "@/shared/api/api-fetch";
+import { useQuery } from "@tanstack/react-query";
+import { useApiFetch } from "./use-fetch";
+import { UserResponse } from "../domain/types";
+import { useAuth } from "@/providers/auth-provider";
 
 export const meKey = ["auth", "me"] as const;
 
 export function useMe() {
   const apiFetch = useApiFetch();
+  const { accessToken, isBootstrapped } = useAuth();
 
-  return useSuspenseQuery<UserResponse>({
+  return useQuery<UserResponse>({
     queryKey: meKey,
+    enabled: isBootstrapped && !!accessToken,
     queryFn: async () => {
       const res = await apiFetch("/api/v1/auth/me", { method: "GET" });
       return (await res.json()) as UserResponse;

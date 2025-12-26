@@ -1,5 +1,5 @@
 import { requestJson } from "@/shared/api/http";
-import type { AuthResponse, UserResponse } from "@/shared/auth/types";
+import { AuthResponse, UserResponse } from "../domain/types";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
 
@@ -22,5 +22,13 @@ export function loginUser(input: { email: string; password: string }) {
     headers: { "Content-Type": "application/json" },
     credentials: "include",
     body: JSON.stringify(input),
+  });
+}
+
+export function logoutUser() {
+  return requestJson<AuthResponse>(`${API_URL}/api/v1/auth/logout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
   });
 }

@@ -15,9 +15,12 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { RegisterInput, registerSchema } from "../../domain/register-schema";
 import { useRegister } from "../../api/use-register";
 import { Spinner } from "@/components/ui/spinner";
+import { Link } from "@tanstack/react-router";
+import { useLogin } from "../../api/use-login";
 
 export const RegisterForm = () => {
   const { mutate, isPending, reset } = useRegister();
+  const { mutate: loginMutate, isPending: loginPending } = useLogin();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -37,6 +40,8 @@ export const RegisterForm = () => {
       email: values.email.trim(),
       password: values.password,
     });
+
+    loginMutate({ email: values.email, password: values.password });
   };
 
   return (
@@ -47,9 +52,9 @@ export const RegisterForm = () => {
         </CardTitle>
 
         <CardDescription className="text-muted-foreground text-center">
-          Join now to join the{" "}
+          Join now to be part of the{" "}
           <span className="text-custom-primary">community</span> and share your
-          <span className="text-custom-primary"> thoughts</span>.
+          <span className="text-custom-primary"> thoughts</span>
         </CardDescription>
       </CardHeader>
 
@@ -151,9 +156,11 @@ export const RegisterForm = () => {
       <CardFooter className="flex items-center justify-center">
         <p className="text-muted-foreground text-sm">
           Already have an account?{" "}
-          <span className="text-custom-primary cursor-pointer underline">
-            Sign In
-          </span>
+          <Link to="/login">
+            <span className="text-custom-primary cursor-pointer underline">
+              Sign In
+            </span>
+          </Link>
         </p>
       </CardFooter>
     </Card>

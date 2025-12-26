@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "@tanstack/react-router";
-import { useAuth } from "@/shared/auth/auth-context";
+import { useAuth } from "@/providers/auth-provider";
 
 export function RequireAuth({ children }: { children: React.ReactNode }) {
   const { accessToken, isBootstrapped } = useAuth();

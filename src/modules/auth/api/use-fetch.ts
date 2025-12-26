@@ -1,6 +1,6 @@
-import { useAuth } from "../auth/auth-context";
-import { ApiError } from "./api-error";
-import { throwIfNotOk } from "./http";
+import { useAuth } from "@/providers/auth-provider";
+import { ApiError } from "@/shared/api/api-error";
+import { throwIfNotOk } from "@/shared/api/http";
 
 const API_URL = import.meta.env.VITE_API_URL as string;
 

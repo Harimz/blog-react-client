@@ -4,10 +4,10 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import appCss from "../styles.css?url";
 import { Navbar } from "@/shared/components/navbar";
-import { AuthProvider } from "@/shared/auth/auth-context";
-import { queryClient } from "@/shared/providers/query-client";
+import { queryClient } from "@/providers/query-client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/providers/auth-provider";
 
 export const Route = createRootRoute({
   head: () => ({
