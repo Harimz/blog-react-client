@@ -7,7 +7,7 @@ export const Route = createFileRoute("/register")({
 
 function RouteComponent() {
   return (
-    <div className="max-w-md mx-auto p-6">
+    <div className="max-w-md mx-auto mt-24 p-6">
       <RegisterForm />
     </div>
   );

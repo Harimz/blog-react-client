@@ -8,6 +8,7 @@ import { queryClient } from "@/providers/query-client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/providers/auth-provider";
+import { MobileFabMenu } from "@/shared/components/mobile-fab-menu";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -47,8 +48,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <Toaster position="top-center" />
 
             <Navbar />
+
+            <MobileFabMenu />
             {children}
-            <TanStackDevtools
+            {/* <TanStackDevtools
               config={{
                 position: "bottom-right",
               }}
@@ -58,7 +61,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                   render: <TanStackRouterDevtoolsPanel />,
                 },
               ]}
-            />
+            /> */}
             <Scripts />
           </AuthProvider>
         </QueryClientProvider>
