@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PostsCreateRouteImport } from './routes/posts/create'
+import { Route as AdminTagsCreateRouteImport } from './routes/admin/tags/create'
+import { Route as AdminCategoriesCreateRouteImport } from './routes/admin/categories/create'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -28,35 +31,81 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PostsCreateRoute = PostsCreateRouteImport.update({
+  id: '/posts/create',
+  path: '/posts/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminTagsCreateRoute = AdminTagsCreateRouteImport.update({
+  id: '/admin/tags/create',
+  path: '/admin/tags/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCategoriesCreateRoute = AdminCategoriesCreateRouteImport.update({
+  id: '/admin/categories/create',
+  path: '/admin/categories/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/posts/create': typeof PostsCreateRoute
+  '/admin/categories/create': typeof AdminCategoriesCreateRoute
+  '/admin/tags/create': typeof AdminTagsCreateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/posts/create': typeof PostsCreateRoute
+  '/admin/categories/create': typeof AdminCategoriesCreateRoute
+  '/admin/tags/create': typeof AdminTagsCreateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/posts/create': typeof PostsCreateRoute
+  '/admin/categories/create': typeof AdminCategoriesCreateRoute
+  '/admin/tags/create': typeof AdminTagsCreateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/register'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/posts/create'
+    | '/admin/categories/create'
+    | '/admin/tags/create'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/register'
-  id: '__root__' | '/' | '/login' | '/register'
+  to:
+    | '/'
+    | '/login'
+    | '/register'
+    | '/posts/create'
+    | '/admin/categories/create'
+    | '/admin/tags/create'
+  id:
+    | '__root__'
+    | '/'
+    | '/login'
+    | '/register'
+    | '/posts/create'
+    | '/admin/categories/create'
+    | '/admin/tags/create'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  PostsCreateRoute: typeof PostsCreateRoute
+  AdminCategoriesCreateRoute: typeof AdminCategoriesCreateRoute
+  AdminTagsCreateRoute: typeof AdminTagsCreateRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +131,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/posts/create': {
+      id: '/posts/create'
+      path: '/posts/create'
+      fullPath: '/posts/create'
+      preLoaderRoute: typeof PostsCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/tags/create': {
+      id: '/admin/tags/create'
+      path: '/admin/tags/create'
+      fullPath: '/admin/tags/create'
+      preLoaderRoute: typeof AdminTagsCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/categories/create': {
+      id: '/admin/categories/create'
+      path: '/admin/categories/create'
+      fullPath: '/admin/categories/create'
+      preLoaderRoute: typeof AdminCategoriesCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +159,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  PostsCreateRoute: PostsCreateRoute,
+  AdminCategoriesCreateRoute: AdminCategoriesCreateRoute,
+  AdminTagsCreateRoute: AdminTagsCreateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

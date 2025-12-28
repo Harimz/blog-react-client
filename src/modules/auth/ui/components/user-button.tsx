@@ -18,6 +18,7 @@ import { useMe } from "../../api/use-me";
 import { useAuth } from "@/providers/auth-provider";
 import { useLogout } from "../../api/use-logout";
 import { Spinner } from "@/components/ui/spinner";
+import { Link } from "@tanstack/react-router";
 
 export const UserButton = () => {
   const { isBootstrapped } = useAuth();
@@ -42,6 +43,22 @@ export const UserButton = () => {
           <DropdownMenuItem>Profile</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
         </DropdownMenuGroup>
+
+        {data?.role === "ADMIN" && (
+          <div>
+            <DropdownMenuLabel>Admin Settings</DropdownMenuLabel>
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <Link to="/admin/categories/create">Categories</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to="/admin/tags/create">Tags</Link>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </div>
+        )}
+
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => mutate()}>
           {!isPending ? "Log Out" : <Spinner />}

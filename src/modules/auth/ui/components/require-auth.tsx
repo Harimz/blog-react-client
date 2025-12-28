@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "@tanstack/react-router";
 import { useAuth } from "@/providers/auth-provider";
 
-export function RequireAuth({ children }: { children: React.ReactNode }) {
+export const RequireAuth = ({ children }: { children: React.ReactNode }) => {
   const { accessToken, isBootstrapped } = useAuth();
 
   if (!isBootstrapped) {
@@ -14,4 +14,4 @@ export function RequireAuth({ children }: { children: React.ReactNode }) {
   }
 
   return <>{children}</>;
-}
+};
