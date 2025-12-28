@@ -13,10 +13,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { RegisterInput, registerSchema } from "../../domain/register-schema";
-import { useRegister } from "../../api/use-register";
 import { Spinner } from "@/components/ui/spinner";
 import { Link } from "@tanstack/react-router";
-import { useLogin } from "../../api/use-login";
+import { useLogin, useRegister } from "../../api/auth-mutations";
 
 export const RegisterForm = () => {
   const { mutate, isPending, reset } = useRegister();

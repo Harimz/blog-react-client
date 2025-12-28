@@ -15,7 +15,7 @@ import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import { LoginInput, loginSchema } from "../../domain/login-schema";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useLogin } from "../../api/use-login";
+import { useLogin } from "../../api/auth-mutations";
 
 export const LoginForm = () => {
   const { mutate, isPending, reset } = useLogin();

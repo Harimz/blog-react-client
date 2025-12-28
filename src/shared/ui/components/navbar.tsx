@@ -28,20 +28,6 @@ export const Navbar = () => {
             />
           </Link>
 
-          {!accessToken && (
-            <div className="hidden md:flex gap-4">
-              <Link to="/login">
-                <Button variant="outline" className="cursor-pointer">
-                  Log In
-                </Button>
-              </Link>
-
-              <Link to="/register">
-                <Button variant="primary">Sign Up</Button>
-              </Link>
-            </div>
-          )}
-
           <div className="items-center hidden md:flex">
             <div className="flex items-center gap-4 mr-24 ">
               <div className="relative md:w-75 lg:w-100 hidden md:block">
@@ -52,9 +38,11 @@ export const Navbar = () => {
                 <Search className="size-4 absolute left-2.5 top-2.5" />
               </div>
 
-              <Button variant="primary">
-                Create <Plus />
-              </Button>
+              {accessToken && (
+                <Button variant="primary">
+                  Create <Plus />
+                </Button>
+              )}
             </div>
 
             {accessToken && (
@@ -68,6 +56,20 @@ export const Navbar = () => {
                 </Button>
 
                 <UserButton />
+              </div>
+            )}
+
+            {!accessToken && (
+              <div className="hidden md:flex gap-4">
+                <Link to="/login">
+                  <Button variant="outline" className="cursor-pointer">
+                    Log In
+                  </Button>
+                </Link>
+
+                <Link to="/register">
+                  <Button variant="primary">Sign Up</Button>
+                </Link>
               </div>
             )}
           </div>

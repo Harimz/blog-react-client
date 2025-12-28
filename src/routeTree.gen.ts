@@ -13,8 +13,8 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsCreateRouteImport } from './routes/posts/create'
+import { Route as AdminCategoriesIndexRouteImport } from './routes/admin/categories/index'
 import { Route as AdminTagsCreateRouteImport } from './routes/admin/tags/create'
-import { Route as AdminCategoriesCreateRouteImport } from './routes/admin/categories/create'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -36,14 +36,14 @@ const PostsCreateRoute = PostsCreateRouteImport.update({
   path: '/posts/create',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminCategoriesIndexRoute = AdminCategoriesIndexRouteImport.update({
+  id: '/admin/categories/',
+  path: '/admin/categories/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminTagsCreateRoute = AdminTagsCreateRouteImport.update({
   id: '/admin/tags/create',
   path: '/admin/tags/create',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminCategoriesCreateRoute = AdminCategoriesCreateRouteImport.update({
-  id: '/admin/categories/create',
-  path: '/admin/categories/create',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -52,16 +52,16 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/posts/create': typeof PostsCreateRoute
-  '/admin/categories/create': typeof AdminCategoriesCreateRoute
   '/admin/tags/create': typeof AdminTagsCreateRoute
+  '/admin/categories': typeof AdminCategoriesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/posts/create': typeof PostsCreateRoute
-  '/admin/categories/create': typeof AdminCategoriesCreateRoute
   '/admin/tags/create': typeof AdminTagsCreateRoute
+  '/admin/categories': typeof AdminCategoriesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -69,8 +69,8 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/posts/create': typeof PostsCreateRoute
-  '/admin/categories/create': typeof AdminCategoriesCreateRoute
   '/admin/tags/create': typeof AdminTagsCreateRoute
+  '/admin/categories/': typeof AdminCategoriesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,24 +79,24 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/posts/create'
-    | '/admin/categories/create'
     | '/admin/tags/create'
+    | '/admin/categories'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/login'
     | '/register'
     | '/posts/create'
-    | '/admin/categories/create'
     | '/admin/tags/create'
+    | '/admin/categories'
   id:
     | '__root__'
     | '/'
     | '/login'
     | '/register'
     | '/posts/create'
-    | '/admin/categories/create'
     | '/admin/tags/create'
+    | '/admin/categories/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -104,8 +104,8 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   PostsCreateRoute: typeof PostsCreateRoute
-  AdminCategoriesCreateRoute: typeof AdminCategoriesCreateRoute
   AdminTagsCreateRoute: typeof AdminTagsCreateRoute
+  AdminCategoriesIndexRoute: typeof AdminCategoriesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -138,18 +138,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/categories/': {
+      id: '/admin/categories/'
+      path: '/admin/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/tags/create': {
       id: '/admin/tags/create'
       path: '/admin/tags/create'
       fullPath: '/admin/tags/create'
       preLoaderRoute: typeof AdminTagsCreateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/categories/create': {
-      id: '/admin/categories/create'
-      path: '/admin/categories/create'
-      fullPath: '/admin/categories/create'
-      preLoaderRoute: typeof AdminCategoriesCreateRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -160,8 +160,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   PostsCreateRoute: PostsCreateRoute,
-  AdminCategoriesCreateRoute: AdminCategoriesCreateRoute,
   AdminTagsCreateRoute: AdminTagsCreateRoute,
+  AdminCategoriesIndexRoute: AdminCategoriesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

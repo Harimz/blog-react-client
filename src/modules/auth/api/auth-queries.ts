@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useApiFetch } from "./use-fetch";
+import { useApiFetch } from "../../../hooks/use-fetch";
 import { UserResponse } from "../domain/types";
 import { useAuth } from "@/providers/auth-provider";
 

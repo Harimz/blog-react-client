@@ -1,24 +1,19 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useMe } from "../../api/use-me";
 import { useAuth } from "@/providers/auth-provider";
-import { useLogout } from "../../api/use-logout";
 import { Spinner } from "@/components/ui/spinner";
 import { Link } from "@tanstack/react-router";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useLogout } from "../../api/auth-mutations";
+import { useMe } from "../../api/auth-queries";
 
 export const UserButton = () => {
   const { isBootstrapped } = useAuth();
@@ -26,7 +21,7 @@ export const UserButton = () => {
   const { mutate, isPending } = useLogout();
 
   if (!isBootstrapped) {
-    return "loading...";
+    return <Skeleton className="size-10 rounded-full" />;
   }
 
   return (
@@ -50,7 +45,7 @@ export const UserButton = () => {
 
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Link to="/admin/categories/create">Categories</Link>
+                <Link to="/admin/categories">Categories</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link to="/admin/tags/create">Tags</Link>

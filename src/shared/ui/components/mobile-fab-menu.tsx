@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useLogout } from "@/modules/auth/api/use-logout";
+import { useLogout } from "@/modules/auth/api/auth-mutations";
 import { useAuth } from "@/providers/auth-provider";
 import { Link } from "@tanstack/react-router";
 import { LogIn, LogOut, Menu, Settings, User, UserPlus, X } from "lucide-react";

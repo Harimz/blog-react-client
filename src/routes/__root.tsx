@@ -3,12 +3,15 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import appCss from "../styles.css?url";
-import { Navbar } from "@/shared/components/navbar";
+import { Navbar } from "@/shared/ui/components/navbar";
 import { queryClient } from "@/providers/query-client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/providers/auth-provider";
-import { MobileFabMenu } from "@/shared/components/mobile-fab-menu";
+import { MobileFabMenu } from "@/shared/ui/components/mobile-fab-menu";
+import { Toaster as HotToaster } from "react-hot-toast";
+import { MdErrorOutline } from "react-icons/md";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -47,9 +50,34 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <AuthProvider>
             <Toaster position="top-center" />
 
+            <HotToaster
+              position="top-center"
+              toastOptions={{
+                error: {
+                  style: {
+                    background: "rgba(165, 0, 0, 0.65)",
+                    color: "white",
+                  },
+                  icon: <MdErrorOutline className="size-6 text-white" />,
+                },
+                success: {
+                  style: {
+                    background: "rgba(32, 232, 0, 0.56)",
+                    color: "white",
+                  },
+                },
+                loading: {
+                  icon: (
+                    <AiOutlineLoading3Quarters className="size-4 animate-spin" />
+                  ),
+                },
+              }}
+            />
+
             <Navbar />
 
             <MobileFabMenu />
+
             {children}
             {/* <TanStackDevtools
               config={{

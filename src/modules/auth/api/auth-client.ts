@@ -1,9 +1,6 @@
 import { requestJson } from "@/shared/api/http";
 import { AuthResponse, UserResponse } from "../domain/types";
-
-const RAW = import.meta.env.VITE_API_URL as string;
-
-export const API_URL = RAW.replace(/\/+$/, "");
+import { API_URL } from "@/shared/api/api-url";
 
 export function registerUser(input: {
   name: string;

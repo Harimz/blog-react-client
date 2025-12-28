@@ -1,8 +1,7 @@
 import React from "react";
 import { Navigate, useLocation } from "@tanstack/react-router";
 import { useAuth } from "@/providers/auth-provider";
-import { useMe } from "../../api/use-me";
-import { Spinner } from "@/components/ui/spinner";
+import { useMe } from "../../api/auth-queries";
 
 export const RequireAdminAuth = ({
   children,

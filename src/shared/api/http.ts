@@ -50,10 +50,19 @@ export const requestJson = async <T>(
   input: RequestInfo | URL,
   init?: RequestInit
 ): Promise<T> => {
-  const res = await fetch(input, init);
+  let res: Response;
+
+  try {
+    res = await fetch(input, init);
+  } catch (err) {
+    throw new ApiError(0, "Network error", { cause: err });
+  }
+
   await throwIfNotOk(res);
 
   const payload = await readJsonSafely<T>(res);
 
-  return payload as T;
+  if (payload == null) throw new ApiError(res.status, "Empty response body");
+
+  return payload;
 };
