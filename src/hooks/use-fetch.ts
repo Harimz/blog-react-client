@@ -31,9 +31,11 @@ export const useApiFetch = () => {
     try {
       return await doRequest(accessToken);
     } catch (err) {
-      if (err instanceof ApiError && err.status === 401) {
+      if (
+        err instanceof ApiError &&
+        (err.status === 401 || err.status === 403)
+      ) {
         const newToken = await refresh();
-
         if (!newToken) throw err;
         return await doRequest(newToken);
       }

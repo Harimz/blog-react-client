@@ -1,6 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Ellipsis } from "lucide-react";
-import React from "react";
 
 export const ViewCategoriesSkeleton = () => {
   return (

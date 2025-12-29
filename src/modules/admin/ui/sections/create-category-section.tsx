@@ -1,4 +1,3 @@
-import React from "react";
 import { CreateCategoryForm } from "../components/create-category-form";
 
 export const CreateCategorySection = () => {

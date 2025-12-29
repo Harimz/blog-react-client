@@ -6,42 +6,42 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Controller, useForm } from "react-hook-form";
-import { categorySchema } from "../../domain/category-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCreateCategory } from "../../api/admin-mutations";
+import { createTagsSchema } from "../../domain/tag-schema";
+import { useCreateTag } from "../../api/admin-mutations";
 import { Spinner } from "@/components/ui/spinner";
 
-export const CreateCategoryForm = () => {
-  const { mutate, isPending } = useCreateCategory();
-  const form = useForm<z.infer<typeof categorySchema>>({
-    resolver: zodResolver(categorySchema),
+export const CreateTagForm = () => {
+  const form = useForm<z.infer<typeof createTagsSchema>>({
+    resolver: zodResolver(createTagsSchema),
     defaultValues: {
-      name: "",
+      names: "",
     },
   });
+  const { mutate, isPending } = useCreateTag();
 
-  const handleSubmit = (values: z.infer<typeof categorySchema>) => {
+  const handleSubmit = (values: z.infer<typeof createTagsSchema>) => {
     mutate(values);
   };
 
   return (
     <Card className="shadow-none">
       <CardHeader>
-        <CardTitle>Create a new Category</CardTitle>
+        <CardTitle>Create a new Tag</CardTitle>
 
         <CardDescription>
-          Categories are attached to posts to aid in filtering and description
+          Tags are attached to posts and provide additional information
         </CardDescription>
       </CardHeader>
 
       <CardContent>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <Controller
-            name="name"
+            name="names"
             control={form.control}
             render={({ field, fieldState }) => (
               <Field data-invalid={fieldState.invalid}>
@@ -50,7 +50,7 @@ export const CreateCategoryForm = () => {
                 <Input
                   {...field}
                   aria-invalid={fieldState.invalid}
-                  placeholder="Lifestyle"
+                  placeholder="Enter tag name..."
                   autoComplete="off"
                 />
 

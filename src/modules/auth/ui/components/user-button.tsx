@@ -48,7 +48,7 @@ export const UserButton = () => {
                 <Link to="/admin/categories">Categories</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to="/admin/tags/create">Tags</Link>
+                <Link to="/admin/tags">Tags</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </div>
