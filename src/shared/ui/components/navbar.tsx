@@ -39,9 +39,11 @@ export const Navbar = () => {
               </div>
 
               {accessToken && (
-                <Button variant="primary">
-                  Create <Plus />
-                </Button>
+                <Link to="/posts/create">
+                  <Button variant="primary">
+                    Create <Plus />
+                  </Button>
+                </Link>
               )}
             </div>
 

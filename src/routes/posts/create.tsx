@@ -1,3 +1,4 @@
+import { CreatePostView } from "@/modules/posts/ui/views/create-post-view";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/posts/create")({
@@ -5,5 +6,5 @@ export const Route = createFileRoute("/posts/create")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/posts/create"!</div>;
+  return <CreatePostView />;
 }
