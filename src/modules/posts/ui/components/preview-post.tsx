@@ -1,7 +1,7 @@
 import { useWatch } from "react-hook-form";
 import { CreatePostValues } from "../../domain/create-post-schema";
 import { useMe } from "@/modules/auth/api/auth-queries";
-import { Clock, Dot } from "lucide-react";
+import { Clock, Dot, Tag } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TipTapRenderer } from "./tiptap-renderer";
 import { CategoriesResponse } from "@/modules/categories/domain/types";
@@ -85,8 +85,9 @@ export const PreviewPost = ({ categories, tags }: Props) => {
             {selectedTags.map((tag) => (
               <div
                 key={tag?.id}
-                className="h-6 w-20 px-2 py-1 text-xs bg-muted rounded-full flex items-center justify-center"
+                className="h-6 w-20 px-2 py-1 text-xs bg-muted rounded-full flex items-center justify-center gap-2"
               >
+                <Tag className="size-3" />
                 {tag?.name}
               </div>
             ))}
