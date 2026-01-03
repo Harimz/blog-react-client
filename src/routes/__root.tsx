@@ -12,6 +12,7 @@ import { MobileFabMenu } from "@/shared/ui/components/mobile-fab-menu";
 import { Toaster as HotToaster } from "react-hot-toast";
 import { MdErrorOutline } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Footer } from "@/shared/ui/components/footer";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -79,6 +80,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <MobileFabMenu />
 
             {children}
+
+            <Footer />
             {/* <TanStackDevtools
               config={{
                 position: "bottom-right",

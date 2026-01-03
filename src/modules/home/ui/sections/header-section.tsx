@@ -20,9 +20,5 @@ export const HeaderSection = () => {
 const HeaderSectionSuspense = () => {
   const { data } = usePosts({});
 
-  return (
-    <div className="max-w-560 w-[90%] mx-auto">
-      <HeaderCarousel posts={data.content} />
-    </div>
-  );
+  return <HeaderCarousel posts={data.content} />;
 };

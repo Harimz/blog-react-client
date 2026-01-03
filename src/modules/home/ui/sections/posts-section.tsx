@@ -39,7 +39,7 @@ const PostsSectionSuspense = () => {
   const totalPages = posts.totalPages ?? 1;
 
   return (
-    <div className="max-w-560 w-[90%] mx-auto mt-10">
+    <div className="mt-10">
       <PostFilter categories={categories} query={query} setQuery={setQuery} />
 
       <PostsGrid posts={posts.content} />
