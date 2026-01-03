@@ -24,7 +24,7 @@ export const HeaderCarouselItem = ({
 
       <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-transparent" />
 
-      <div className="w-full relative text-white self-end p-6 flex justify-between">
+      <div className="w-full relative text-white self-end p-2 md:p-6 flex justify-between">
         <div>
           <div className="flex gap-4 mb-4">
             <div className="text-sm rounded-full bg-muted/25 py-1 px-6 flex items-center justify-center">
@@ -45,7 +45,7 @@ export const HeaderCarouselItem = ({
             </div>
           </div>
 
-          <h1 className="font-bold text-4xl">{post.title}</h1>
+          <h1 className="font-bold text-2xl md:text-4xl">{post.title}</h1>
 
           <div className="flex gap-2 mt-2">
             {Array.from({ length: count }).map((_, i) => (
@@ -60,7 +60,7 @@ export const HeaderCarouselItem = ({
           </div>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 hidden md:block">
           <div className="flex items-center gap-2">
             <Avatar className="cursor-pointer size-10">
               <AvatarImage src="/avatars/default-avatar-1.png" />
@@ -70,7 +70,9 @@ export const HeaderCarouselItem = ({
             <h1 className="font-bold text-lg mt-2">{post.author.name}</h1>
           </div>
 
-          <h2 className="text-muted">{post.createdAt}</h2>
+          <h2 className="text-muted text-end">
+            {new Date(post.createdAt).toLocaleDateString()}
+          </h2>
         </div>
       </div>
     </CarouselItem>

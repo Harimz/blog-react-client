@@ -4,25 +4,35 @@ import { PageResponse, PostPreview } from "../domain/types";
 import { homeKeys } from "./keys";
 import { getPosts } from "./home-client";
 
-type SortDir = "asc" | "desc";
+export type SortDir = "asc" | "desc";
+export type SortBy = "createdAt" | "title";
 
-export const usePosts = (
-  params: {
-    page?: number;
-    size?: number;
-    categoryId?: string;
-    tagId?: string;
-    sortBy?: "createdAt" | "title";
-    sortDir?: SortDir;
-  } = { page: 0, size: 3, sortBy: "createdAt", sortDir: "desc" }
-) => {
+export type PostsQueryInput = {
+  page?: number;
+  size?: number;
+  categoryId?: string;
+  tagId?: string;
+  sortBy?: SortBy;
+  sortDir?: SortDir;
+};
+
+export const usePosts = (input: PostsQueryInput) => {
   const apiFetch = useApiFetch();
 
+  const normalized: Required<
+    Pick<PostsQueryInput, "page" | "size" | "sortBy" | "sortDir">
+  > &
+    PostsQueryInput = {
+    page: input.page ?? 0,
+    size: input.size ?? 9,
+    sortBy: input.sortBy ?? "createdAt",
+    sortDir: input.sortDir ?? "desc",
+    categoryId: input.categoryId,
+    tagId: input.tagId,
+  };
+
   return useSuspenseQuery<PageResponse<PostPreview>>({
-    queryKey: homeKeys.posts(params),
-    queryFn: ({ queryKey }) => {
-      const [, , p] = queryKey;
-      return getPosts(apiFetch, p as typeof params);
-    },
+    queryKey: homeKeys.posts(normalized),
+    queryFn: () => getPosts(apiFetch, normalized),
   });
 };

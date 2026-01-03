@@ -2,8 +2,6 @@ import { PageResponse, PostPreview } from "../domain/types";
 
 type Fetcher = (input: string, init?: RequestInit) => Promise<Response>;
 
-type SortDir = "asc" | "desc";
-
 export const getPosts = async (
   fetcher: Fetcher,
   input: {
@@ -12,15 +10,15 @@ export const getPosts = async (
     categoryId?: string;
     tagId?: string;
     sortBy?: "createdAt" | "title";
-    sortDir?: SortDir;
+    sortDir?: "asc" | "desc";
   }
 ) => {
   const params = new URLSearchParams();
   params.set("page", String(input.page ?? 0));
-  params.set("size", String(input.size ?? 3));
+  params.set("size", String(input.size ?? 9));
 
-  const sortBy = input?.sortBy ?? "createdAt";
-  const sortDir = input?.sortDir ?? "desc";
+  const sortBy = input.sortBy ?? "createdAt";
+  const sortDir = input.sortDir ?? "desc";
   params.set("sort", `${sortBy},${sortDir}`);
 
   if (input.categoryId) params.set("categoryId", input.categoryId);
