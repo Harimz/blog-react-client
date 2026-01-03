@@ -1,5 +1,4 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { PreviewPost } from "../components/preview-post";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   createPostSchema,
@@ -16,6 +15,7 @@ export const CreatePostView = () => {
       tagIds: [],
       content: null,
       coverImage: null,
+      status: "PUBLISHED",
     },
     mode: "onChange",
   });

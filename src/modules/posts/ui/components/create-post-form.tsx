@@ -29,6 +29,14 @@ import {
 } from "@/components/ui/select";
 import { TipTapEditor } from "./tiptap-editor";
 import type { JSONContent } from "@tiptap/react";
+import { presignPostCover } from "@/modules/uploads/api/uploads-client";
+import {
+  usePresignPostCover,
+  useUploadToR2,
+} from "@/modules/uploads/api/uploads-mutations";
+import { PresignRes } from "@/modules/uploads/domain/types";
+import { useCreatePost } from "../../api/posts-mutations";
+import { Spinner } from "@/components/ui/spinner";
 
 interface Props {
   categories: CategoriesResponse;
@@ -38,9 +46,24 @@ interface Props {
 export const CreatePostForm = ({ categories, tags }: Props) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { control, handleSubmit } = useFormContext<CreatePostValues>();
+  const { mutateAsync: presignPostCover, isPending: presigningCover } =
+    usePresignPostCover();
+  const { mutateAsync: uploadToR2, isPending: uploading } = useUploadToR2();
+  const { mutate: createPost, isPending: creatingPost } = useCreatePost();
 
-  const onSubmit = (values: CreatePostValues) => {
+  const onSubmit = async (values: CreatePostValues) => {
     console.log(values);
+    let coverImageUrl: string | null = null;
+
+    if (values.coverImage) {
+      const presign = await presignPostCover({ file: values.coverImage });
+      coverImageUrl = await uploadToR2({
+        presignRes: presign,
+        file: values.coverImage,
+      });
+    }
+
+    createPost({ ...values, coverImageUrl });
   };
 
   return (
@@ -61,7 +84,6 @@ export const CreatePostForm = ({ categories, tags }: Props) => {
                   autoComplete="off"
                 />
 
-                {/* cover image controller */}
                 <Controller
                   control={control}
                   name="coverImage"
@@ -212,6 +234,33 @@ export const CreatePostForm = ({ categories, tags }: Props) => {
 
         <Controller
           control={control}
+          name="status"
+          render={({ field, fieldState }) => (
+            <Field className="flex-1 mt-4" data-invalid={fieldState.invalid}>
+              <FieldLabel>Status</FieldLabel>
+
+              <Select
+                value={field.value || ""}
+                onValueChange={(val) => field.onChange(val)}
+                defaultValue="PUBLISHED"
+              >
+                <SelectTrigger aria-invalid={fieldState.invalid}>
+                  <SelectValue placeholder="Select Status" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectItem value={"PUBLISHED"}>Published</SelectItem>
+                  <SelectItem value={"DRAFT"}>Draft</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        <Controller
+          control={control}
           name="content"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid} className="mt-4">
@@ -230,7 +279,13 @@ export const CreatePostForm = ({ categories, tags }: Props) => {
         <div className="w-full flex gap-4 items-center mt-4 justify-end">
           <Button variant="outline">Cancel</Button>
 
-          <Button variant="primary">Create</Button>
+          <Button variant="primary">
+            {creatingPost || uploading || presigningCover ? (
+              <Spinner />
+            ) : (
+              "Save"
+            )}
+          </Button>
         </div>
       </form>
     </div>

@@ -23,7 +23,7 @@ export const PreviewPost = ({ categories, tags }: Props) => {
   const tagIds = useWatch<CreatePostValues>({ name: "tagIds" }) as string[];
   const categoryId = useWatch<CreatePostValues>({ name: "categoryId" });
 
-  const { data } = useMe();
+  const { data, isPending } = useMe();
 
   useEffect(() => {
     if (!coverImage) return setCoverUrl(null);

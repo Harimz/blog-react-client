@@ -1,3 +1,4 @@
+import { RequireAuth } from "@/modules/auth/ui/components/require-auth";
 import { CreatePostView } from "@/modules/posts/ui/views/create-post-view";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -6,5 +7,9 @@ export const Route = createFileRoute("/posts/create")({
 });
 
 function RouteComponent() {
-  return <CreatePostView />;
+  return (
+    <RequireAuth>
+      <CreatePostView />
+    </RequireAuth>
+  );
 }
