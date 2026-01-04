@@ -43,7 +43,7 @@ export const HeaderCarousel = ({ posts }: Props) => {
       <CarouselContent>
         {posts.map((post) => (
           <HeaderCarouselItem
-            key={post.id}
+            key={post.postId}
             post={post}
             currentIndex={currentIndex}
             count={count}

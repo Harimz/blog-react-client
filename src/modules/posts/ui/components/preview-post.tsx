@@ -98,8 +98,6 @@ export const PreviewPost = ({ categories, tags }: Props) => {
       {coverUrl && <img src={coverUrl} className="w-full rounded-md my-4" />}
 
       <TipTapRenderer value={content as any} className="mt-4" />
-      {/* render tiptap JSON/HTML */}
-      {/* coverImage preview via URL.createObjectURL(coverImage) */}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { Category } from "@/modules/categories/domain/types";
 import { AuthorResponse, TagResponse } from "@/modules/posts/domain/types";
 
 export type PostPreview = {
-  id: string;
+  postId: string;
   title: string;
   coverImageUrl: string;
   createdAt: string;

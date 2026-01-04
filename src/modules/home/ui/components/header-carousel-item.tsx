@@ -3,6 +3,7 @@ import { PostPreview } from "../../domain/types";
 import { Tag } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { Link } from "@tanstack/react-router";
 
 export const HeaderCarouselItem = ({
   post,
@@ -45,7 +46,9 @@ export const HeaderCarouselItem = ({
             </div>
           </div>
 
-          <h1 className="font-bold text-2xl md:text-4xl">{post.title}</h1>
+          <Link to="/posts/$postId" params={{ postId: post.postId }}>
+            <h1 className="font-bold text-2xl md:text-4xl">{post.title}</h1>
+          </Link>
 
           <div className="flex gap-2 mt-2">
             {Array.from({ length: count }).map((_, i) => (
