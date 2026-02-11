@@ -1,83 +1,68 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Twitter, X } from "lucide-react";
-import React from "react";
-import { AiFillTikTok } from "react-icons/ai";
 
 export const Footer = () => {
   return (
-    <div className="p-10 bg-black mt-40 flex justify-between w-full flex-col lg:flex-row">
-      <div className="w-full md:w-100">
-        <Link to="/">
-          <h1 className="text-white font-extrabold text-4xl">logbook</h1>
-        </Link>
-
-        <p className="text-white mt-2">
-          Our goal is to create an open space where ideas are shared freely.
-          From technology and world news to fashion, travel, and everyday
-          thoughts, this platform brings together diverse voices to explore,
-          discuss, and learn from one another.
-        </p>
-
-        <p className="text-muted mt-20">@2026 Logbook. All rights reserved</p>
-      </div>
-
-      <div className="text-muted-foreground flex flex-col lg:flex-row gap-10 lg:gap-50">
-        <ul className="space-y-5">
-          <li className="text-white font-bold">About</li>
-          <li>Our Team</li>
-          <li>Blog</li>
-          <li>Info</li>
-        </ul>
-
-        <ul className="space-y-5">
-          <li className="text-white font-bold">Support</li>
-          <li>Contact</li>
-          <li>FAQ</li>
-          <li>Privacy</li>
-        </ul>
-
-        <div>
-          <h1 className="text-white font-bold text-lg">Get Updates</h1>
-
-          <Input
-            className="bg-gray-400/20 border-none"
-            placeholder="Enter email..."
-          />
-
-          <div className="flex gap-4 mt-4">
-            <Button
-              size="icon"
-              className="rounded-full bg-gray-400/40 text-white border-none"
-              variant="outline"
+    <footer className="border-t border-border bg-[#FBF8F3]/25 mt-20">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid gap-8 md:grid-cols-4">
+          <div className="md:col-span-2">
+            <Link
+              to="/"
+              className="font-display text-xl font-bold text-foreground"
             >
-              <Instagram />
-            </Button>
-            <Button
-              size="icon"
-              className="rounded-full bg-gray-400/40 text-white border-none"
-              variant="outline"
-            >
-              <X />
-            </Button>
-            <Button
-              size="icon"
-              className="rounded-full bg-gray-400/40 text-white border-none"
-              variant="outline"
-            >
-              <Facebook />
-            </Button>
-            <Button
-              size="icon"
-              className="rounded-full bg-gray-400/40 text-white border-none"
-              variant="outline"
-            >
-              <AiFillTikTok />
-            </Button>
+              Logbook
+            </Link>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              Thoughtful writing on technology, design, and the art of living
+              well. Published weekly.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Navigate
+            </h4>
+            <div className="flex flex-col gap-2">
+              <Link
+                to="/"
+                className="text-sm text-foreground/70 hover:text-foreground transition-colors"
+              >
+                Home
+              </Link>
+              <span className="text-sm text-foreground/70 hover:text-foreground transition-colors cursor-pointer">
+                Categories
+              </span>
+              <span className="text-sm text-foreground/70 hover:text-foreground transition-colors cursor-pointer">
+                About
+              </span>
+              <span className="text-sm text-foreground/70 hover:text-foreground transition-colors cursor-pointer">
+                Contact
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Connect
+            </h4>
+            <div className="flex flex-col gap-2">
+              <span className="text-sm text-foreground/70 hover:text-foreground transition-colors cursor-pointer">
+                Twitter
+              </span>
+              <span className="text-sm text-foreground/70 hover:text-foreground transition-colors cursor-pointer">
+                GitHub
+              </span>
+              <span className="text-sm text-foreground/70 hover:text-foreground transition-colors cursor-pointer">
+                RSS Feed
+              </span>
+            </div>
           </div>
         </div>
+
+        <div className="mt-10 border-t border-border pt-6 text-center text-xs text-muted-foreground">
+          © 2026 Logbook. All rights reserved.
+        </div>
       </div>
-    </div>
+    </footer>
   );
 };

@@ -9,7 +9,7 @@ const readText = async (res: Response) => {
 };
 
 export const readJsonSafely = async <T = unknown>(
-  res: Response
+  res: Response,
 ): Promise<T | null> => {
   const text = await readText(res);
   if (!text) return null;
@@ -48,7 +48,7 @@ export const throwIfNotOk = async (res: Response) => {
 
 export const requestJson = async <T>(
   input: RequestInfo | URL,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<T> => {
   let res: Response;
 

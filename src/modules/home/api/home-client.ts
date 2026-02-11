@@ -11,8 +11,9 @@ export const getPosts = async (
     tagId?: string;
     sortBy?: "createdAt" | "title";
     sortDir?: "asc" | "desc";
-  }
+  },
 ) => {
+  console.log("FETCHING POSTS");
   const params = new URLSearchParams();
   params.set("page", String(input.page ?? 0));
   params.set("size", String(input.size ?? 9));
@@ -25,5 +26,6 @@ export const getPosts = async (
   if (input.tagId) params.set("tagId", input.tagId);
 
   const res = await fetcher(`/api/v1/posts?${params.toString()}`);
+  console.log("RESPONSE", res);
   return (await res.json()) as PageResponse<PostPreview>;
 };

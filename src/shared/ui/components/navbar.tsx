@@ -18,26 +18,14 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="w-[95%] max-w-640 p-4 mx-auto border-b-2">
-        <div className="flex items-center justify-between">
+      <nav className="p-4 mx-auto sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
+        <div className="w-[95%] max-w-400 mx-auto flex items-center justify-between">
           <Link to="/">
-            <img
-              src="/logo.png"
-              alt="Blog logo"
-              className="h-10 md:h-14 w-32 md:w-42"
-            />
+            <h1 className="font-bold text-2xl">Logbook</h1>
           </Link>
 
           <div className="items-center hidden md:flex">
             <div className="flex items-center gap-4 mr-24 ">
-              <div className="relative md:w-75 lg:w-100 hidden md:block">
-                <Input
-                  placeholder="Search posts..."
-                  className="pl-8.5 bg-gray-400/10 w-full"
-                />
-                <Search className="size-4 absolute left-2.5 top-2.5" />
-              </div>
-
               {accessToken && (
                 <Link to="/posts/create">
                   <Button variant="primary">
