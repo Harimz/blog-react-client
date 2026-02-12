@@ -31,3 +31,10 @@ export function logoutUser() {
     credentials: "include",
   });
 }
+
+export function getMe() {
+  return requestJson<UserResponse>(`${API_URL}/api/v1/auth/me`, {
+    method: "GET",
+    credentials: "include",
+  });
+}

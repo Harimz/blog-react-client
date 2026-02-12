@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         {
           method: "POST",
           credentials: "include",
-        }
+        },
       );
 
       setAccessToken(data.token);
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       refresh,
     }),
-    [accessToken, isBootstrapped]
+    [accessToken, isBootstrapped],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

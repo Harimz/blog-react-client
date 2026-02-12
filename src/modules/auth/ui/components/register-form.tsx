@@ -14,11 +14,12 @@ import { Controller, useForm } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { RegisterInput, registerSchema } from "../../domain/register-schema";
 import { Spinner } from "@/components/ui/spinner";
-import { Link, redirect } from "@tanstack/react-router";
+import { Link, redirect, useNavigate } from "@tanstack/react-router";
 import { useRegister } from "../../api/auth-mutations";
 
 export const RegisterForm = () => {
   const { mutate, isPending, reset } = useRegister();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -33,13 +34,18 @@ export const RegisterForm = () => {
   const handleSubmit = (values: RegisterInput) => {
     reset();
 
-    mutate({
-      name: values.name.trim(),
-      email: values.email.trim(),
-      password: values.password,
-    });
-
-    redirect({ to: "/login" });
+    mutate(
+      {
+        name: values.name.trim(),
+        email: values.email.trim(),
+        password: values.password,
+      },
+      {
+        onSuccess: () => {
+          navigate({ to: "/login" });
+        },
+      },
+    );
   };
 
   return (

@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { UserButton } from "@/modules/auth/ui/components/user-button";
 import { useAuth } from "@/providers/auth-provider";
 import { Link } from "@tanstack/react-router";
-import { Bell, Plus, Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { useState } from "react";
 import { ResponsiveModal } from "./resposive-dialog";
 
@@ -35,19 +35,7 @@ export const Navbar = () => {
               )}
             </div>
 
-            {accessToken && (
-              <div className="flex items-center gap-4">
-                <Button
-                  size="icon"
-                  className="rounded-full size-10"
-                  variant="outline"
-                >
-                  <Bell />
-                </Button>
-
-                <UserButton />
-              </div>
-            )}
+            {accessToken && <UserButton />}
 
             {!accessToken && (
               <div className="hidden md:flex gap-4">

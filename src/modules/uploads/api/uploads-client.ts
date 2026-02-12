@@ -27,3 +27,16 @@ export const uploadToR2 = async (presign: PresignRes, file: File) => {
 
   return presign.publicUrl;
 };
+
+export const presignAvatar = async (apiFetch: Fetcher, file: File) => {
+  const res = await apiFetch("/api/v1/uploads/presign/avatar", {
+    method: "POST",
+    body: JSON.stringify({
+      filename: file.name,
+      contentType: file.type,
+      kind: "avatar",
+    }),
+  });
+
+  return (await res.json()) as PresignRes;
+};

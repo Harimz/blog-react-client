@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { PostPreview } from "../../domain/types";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 interface PostCardProps {
   post: PostPreview;
@@ -35,14 +36,21 @@ const PostCard = ({ post, index = 0 }: PostCardProps) => {
         </Link>
 
         <div className="mt-auto flex items-center gap-2 pt-4">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-custom-primary text-xs font-bold text-primary-foreground">
-            {post.author.name.charAt(0)}
-          </div>
+          <Avatar className="cursor-pointer size-8">
+            <AvatarImage
+              className="object-cover"
+              src={
+                post.author?.avatarUrl ??
+                "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+              }
+            />
+          </Avatar>
           <div className="flex flex-col">
             <span className="text-xs font-medium text-foreground">
               {post.author.name}
             </span>
             <span className="text-[11px] text-muted-foreground">
+              Posted on:{" "}
               {new Date(post.createdAt).toLocaleDateString("en-US", {
                 month: "short",
                 day: "numeric",

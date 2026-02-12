@@ -1,11 +1,29 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { usePost } from "../../api/posts-queries";
 import { TipTapRenderer } from "../components/tiptap-renderer";
-import { ArrowLeft, Calendar, Clock } from "lucide-react";
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  Edit,
+  MoreVertical,
+  Trash,
+} from "lucide-react";
 import { PostInfoSkeleton } from "../skeletons/post-info-skeleton";
 import { GeneralDisplayError } from "@/shared/ui/components/general-display-error";
 import { Link } from "@tanstack/react-router";
+import { useMe } from "@/modules/auth/api/auth-queries";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Input } from "@/components/ui/input";
+import { TipTapEditor } from "../components/tiptap-editor";
+import type { JSONContent } from "@tiptap/react";
+import { useUpdatePost } from "../../api/posts-mutations";
 
 export const PostInfoSection = ({ postId }: { postId: string }) => {
   return (
@@ -21,6 +39,51 @@ export const PostInfoSection = ({ postId }: { postId: string }) => {
 
 const PostInfoSectionSuspense = ({ postId }: { postId: string }) => {
   const { data: post } = usePost(postId);
+  const [editMode, setEditMode] = useState(false);
+  const { data: user, isLoading } = useMe();
+  const [editedTitle, setEditedTitle] = useState(post.title ?? "");
+  const [editedContent, setEditedContent] = useState<JSONContent | null>(() => {
+    try {
+      return post.content ? (JSON.parse(post.content) as JSONContent) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const { mutate: updatePost, isPending } = useUpdatePost(postId);
+
+  const startEdit = () => {
+    setEditedTitle(post.title ?? "");
+    try {
+      setEditedContent(
+        post.content ? (JSON.parse(post.content) as JSONContent) : null,
+      );
+    } catch {
+      setEditedContent(null);
+    }
+    setEditMode(true);
+  };
+
+  const cancelEdit = () => {
+    setEditMode(false);
+    setEditedTitle(post.title ?? "");
+    try {
+      setEditedContent(
+        post.content ? (JSON.parse(post.content) as JSONContent) : null,
+      );
+    } catch {
+      setEditedContent(null);
+    }
+  };
+
+  const handleUpdatePost = () => {
+    updatePost({
+      title: editedTitle,
+      content: editedContent,
+    });
+
+    cancelEdit();
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -32,16 +95,44 @@ const PostInfoSectionSuspense = ({ postId }: { postId: string }) => {
         />
         <div className="absolute inset-0 bg-linear-to-t from-foreground/80 to-transparent" />
       </div>
+      <article className="mx-auto -mt-20 relative z-10 w-[95%] min-w-50 max-w-3xl px-4 pb-16">
+        <div className="rounded-xl bg-[#FBF8F3] p-6 shadow-xl md:p-10">
+          <div className="flex justify-between">
+            <Link
+              to="/"
+              className="mb-6 inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              Back to articles
+            </Link>
 
-      <article className="mx-auto -mt-20 relative z-10 max-w-3xl px-4 pb-16">
-        <div className="rounded-xl bg-background p-6 shadow-xl md:p-10">
-          <Link
-            to="/"
-            className="mb-6 inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" />
-            Back to articles
-          </Link>
+            {user?.id === post.author.id && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    size="icon"
+                    variant="outline"
+                    className="cursor-pointer bg-transparent"
+                  >
+                    <MoreVertical className="size-4 text-muted-foreground" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto py-2 px-6 space-y-2">
+                  <div
+                    className="flex items-center gap-2 text-muted-foreground cursor-pointer"
+                    onClick={startEdit}
+                  >
+                    <Edit className="size-4" />
+                    Edit
+                  </div>
+                  <div className="flex items-center gap-2 text-muted-foreground cursor-pointer">
+                    <Trash className="size-4" />
+                    Delete
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
+          </div>
 
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-custom-primary px-3 py-1 text-xs font-semibold text-primary-foreground">
@@ -57,9 +148,16 @@ const PostInfoSectionSuspense = ({ postId }: { postId: string }) => {
             ))}
           </div>
 
-          <h1 className="font-display text-3xl font-bold leading-tight text-foreground md:text-4xl">
-            {post.title}
-          </h1>
+          {editMode ? (
+            <Input
+              value={editedTitle}
+              onChange={({ target }) => setEditedTitle(target.value)}
+            />
+          ) : (
+            <h1 className="font-display text-3xl font-bold leading-tight text-foreground md:text-4xl">
+              {post.title}
+            </h1>
+          )}
 
           <div className="mt-4 flex flex-wrap items-center gap-4 border-b border-border pb-6">
             <div className="flex items-center gap-2">
@@ -84,8 +182,31 @@ const PostInfoSectionSuspense = ({ postId }: { postId: string }) => {
             </span>
           </div>
 
-          <TipTapRenderer className="mt-4" value={JSON.parse(post.content)} />
+          {editMode ? (
+            <TipTapEditor value={editedContent} onChange={setEditedContent} />
+          ) : (
+            <TipTapRenderer className="mt-4" value={JSON.parse(post.content)} />
+          )}
         </div>
+
+        {editMode && (
+          <div className="flex justify-end mt-4 gap-4">
+            <Button
+              variant="outline"
+              className="cursor-pointer"
+              onClick={cancelEdit}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              disabled={isPending}
+              onClick={handleUpdatePost}
+            >
+              Save
+            </Button>
+          </div>
+        )}
       </article>
     </div>
   );

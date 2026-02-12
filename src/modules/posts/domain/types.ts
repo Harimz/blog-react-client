@@ -5,6 +5,7 @@ export type PostStatus = "DRAFT" | "PUBLISHED";
 export type AuthorResponse = {
   id: string;
   name: string;
+  avatarUrl: string;
 };
 export type TagResponse = {
   id: string;

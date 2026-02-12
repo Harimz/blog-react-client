@@ -29,12 +29,10 @@ import {
 } from "@/components/ui/select";
 import { TipTapEditor } from "./tiptap-editor";
 import type { JSONContent } from "@tiptap/react";
-import { presignPostCover } from "@/modules/uploads/api/uploads-client";
 import {
   usePresignPostCover,
   useUploadToR2,
 } from "@/modules/uploads/api/uploads-mutations";
-import { PresignRes } from "@/modules/uploads/domain/types";
 import { useCreatePost } from "../../api/posts-mutations";
 import { Spinner } from "@/components/ui/spinner";
 
@@ -179,7 +177,7 @@ export const CreatePostForm = ({ categories, tags }: Props) => {
                         variant="outline"
                         className={cn(
                           "w-full justify-between",
-                          fieldState.invalid && "border-destructive"
+                          fieldState.invalid && "border-destructive",
                         )}
                       >
                         <span className="truncate">
@@ -211,7 +209,7 @@ export const CreatePostForm = ({ categories, tags }: Props) => {
                                 <Check
                                   className={cn(
                                     "mr-2 size-4",
-                                    isSelected ? "opacity-100" : "opacity-0"
+                                    isSelected ? "opacity-100" : "opacity-0",
                                   )}
                                 />
                                 {t.name}

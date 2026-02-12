@@ -28,15 +28,21 @@ export const UserButton = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer size-10">
-          <AvatarImage src="/avatars/default-avatar-1.png" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage
+            className="object-cover"
+            src={
+              data?.avatarUrl ??
+              "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+            }
+          />
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <Link to="/profile">
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
 
         {data?.role === "ADMIN" && (
