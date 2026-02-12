@@ -40,12 +40,6 @@ export const MobileFabMenu = () => {
       to: "/profile",
     },
     {
-      icon: <Settings className="size-4" />,
-      text: "Settings",
-      auth: true,
-      to: "/settings",
-    },
-    {
       icon: <LogOut className="size-4" />,
       text: "Logout",
       auth: true,

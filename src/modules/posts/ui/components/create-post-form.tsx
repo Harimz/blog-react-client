@@ -35,6 +35,7 @@ import {
 } from "@/modules/uploads/api/uploads-mutations";
 import { useCreatePost } from "../../api/posts-mutations";
 import { Spinner } from "@/components/ui/spinner";
+import { useNavigate } from "@tanstack/react-router";
 
 interface Props {
   categories: CategoriesResponse;
@@ -48,6 +49,7 @@ export const CreatePostForm = ({ categories, tags }: Props) => {
     usePresignPostCover();
   const { mutateAsync: uploadToR2, isPending: uploading } = useUploadToR2();
   const { mutate: createPost, isPending: creatingPost } = useCreatePost();
+  const navigate = useNavigate();
 
   const onSubmit = async (values: CreatePostValues) => {
     console.log(values);
@@ -61,7 +63,14 @@ export const CreatePostForm = ({ categories, tags }: Props) => {
       });
     }
 
-    createPost({ ...values, coverImageUrl });
+    createPost(
+      { ...values, coverImageUrl },
+      {
+        onSuccess: () => {
+          navigate({ to: "/" });
+        },
+      },
+    );
   };
 
   return (
